@@ -1,6 +1,6 @@
 # 웹 프레임워크 및 확장
-fastapi==0.68.0
-uvicorn==0.15.0
+fastapi==0.95.0
+uvicorn==0.20.0
 
 # 데이터베이스
 sqlalchemy==1.4.23
@@ -58,3 +58,6 @@ docker==5.0.2
 kubernetes==18.20.0
 
 # pathspec 버전 제거 (dvc와의 충돌 해결을 위해)
+
+# 템플릿 엔진
+Jinja2==3.1.2
