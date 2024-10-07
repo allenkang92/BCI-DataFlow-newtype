@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Delete Data Point{% endblock %}
+{% block content %}
+<h1 class="mb-4">Delete Data Point</h1>
+<p>Are you sure you want to delete this data point?</p>
+<p>Timestamp: {{ data_point.timestamp }}</p>
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{{ url_for('session_detail', session_id=data_point.session.id) }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Create New Session{% endblock %}
+{% block content %}
+<h1 class="mb-4">Create New BCI Session</h1>
+<form method="post">
+    {% for field in form %}
+        <div class="mb-3">
+            <label for="{{ field.name }}" class="form-label">{{ field.label }}</label>
+            {% if field.errors %}
+                <div class="alert alert-danger">
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <input type="{{ field.type }}" class="form-control" id="{{ field.name }}" name="{{ field.name }}" value="{{ field.value or '' }}">
+            {% if field.help_text %}
+                <div class="form-text">{{ field.help_text }}</div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Create Session</button>
+</form>
+<a href="{{ url_for('session_list') }}" class="btn btn-secondary mt-3">Back to Session List</a>
+{% endblock %}

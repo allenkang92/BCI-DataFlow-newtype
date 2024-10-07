@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Delete Session{% endblock %}
+{% block content %}
+<h1 class="mb-4">Delete Session</h1>
+<p>Are you sure you want to delete the session "{{ session.session_name }}"?</p>
+<p>This will also delete all associated data points.</p>
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{{ url_for('session_detail', session_id=session.id) }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
