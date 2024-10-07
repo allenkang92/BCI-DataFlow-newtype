@@ -1,33 +1,24 @@
-{% extends 'base.html' %}
-{% block title %}BCI Sessions{% endblock %}
+{% extends "base.html" %}
 {% block content %}
-<h1 class="mb-4">BCI Sessions</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Session Name</th>
-            <th>Date Recorded</th>
-            <th>Subject ID</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
+<h1>BCI Sessions</h1>
+<table>
+    <tr>
+        <th>Session Name</th>
+        <th>Date Recorded</th>
+        <th>Subject ID</th>
+        <th>Actions</th>
+    </tr>
     {% for session in sessions %}
-        <tr>
-            <td>{{ session.session_name }}</td>
-            <td>{{ session.date_recorded.strftime('%B %d, %Y') }}</td>
-            <td>{{ session.subject_id }}</td>
-            <td>
-                <a href="{{ url_for('session_detail', session_id=session.id) }}" class="btn btn-primary btn-sm">View</a>
-                <a href="{{ url_for('delete_session', session_id=session.id) }}" class="btn btn-danger btn-sm">Delete</a>
-            </td>
-        </tr>
-    {% else %}
-        <tr>
-            <td colspan="4">No sessions available.</td>
-        </tr>
+    <tr>
+        <td>{{ session.session_name }}</td>
+        <td>{{ session.date_recorded }}</td>
+        <td>{{ session.subject_id }}</td>
+        <td>
+            <a href="{{ url_for('session_detail', session_id=session.id) }}">View</a>
+            <a href="{{ url_for('delete_session', session_id=session.id) }}">Delete</a>
+        </td>
+    </tr>
     {% endfor %}
-    </tbody>
 </table>
-<a href="{{ url_for('create_session') }}" class="btn btn-primary mt-3">Create New Session</a>
+<a href="{{ url_for('create_session') }}" class="btn">Create New Session</a>
 {% endblock %}

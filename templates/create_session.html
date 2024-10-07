@@ -2,7 +2,7 @@
 {% block title %}Create New Session{% endblock %}
 {% block content %}
 <h1 class="mb-4">Create New BCI Session</h1>
-<form method="post">
+<form method="post" action="{{ url_for('create_session') }}">
     {% for field in form %}
         <div class="mb-3">
             <label for="{{ field.name }}" class="form-label">{{ field.label }}</label>

@@ -1,33 +1,48 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request, Form
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
-from .. import crud, schemas
+from .. import crud, models, schemas
 from ..database import get_db
+from fastapi.templating import Jinja2Templates
 
 router = APIRouter()
+templates = Jinja2Templates(directory="templates")
 
-@router.post("/sessions/", response_model=schemas.BCISession)
-def create_session(session: schemas.BCISessionCreate, db: Session = Depends(get_db)):
-    return crud.create_session(db=db, session=session)
+class SessionForm:
+    def __init__(self, request: Request):
+        self.request: Request = request
+        self.errors: List = []
+        self.session_name: Optional[str] = None
+        self.date_recorded: Optional[str] = None
+        self.subject_id: Optional[str] = None
 
-@router.get("/sessions/", response_model=list[schemas.BCISession])
-def read_sessions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    sessions = crud.get_sessions(db, skip=skip, limit=limit)
-    return sessions
+    async def load_data(self):
+        form = await self.request.form()
+        self.session_name = form.get("session_name")
+        self.date_recorded = form.get("date_recorded")
+        self.subject_id = form.get("subject_id")
 
-@router.get("/sessions/{session_id}", response_model=schemas.BCISession)
-def read_session(session_id: int, db: Session = Depends(get_db)):
-    db_session = crud.get_session(db, session_id=session_id)
-    if db_session is None:
-        raise HTTPException(status_code=404, detail="Session not found")
-    return db_session
+    def is_valid(self):
+        if not self.session_name or not self.date_recorded or not self.subject_id:
+            self.errors.append("All fields are required")
+        if not self.errors:
+            return True
+        return False
 
-@router.post("/sessions/{session_id}/data/", response_model=schemas.BCIData)
-def create_data_for_session(
-    session_id: int, data_point: schemas.BCIDataCreate, db: Session = Depends(get_db)
-):
-    return crud.create_data_point(db=db, data_point=data_point, session_id=session_id)
+@router.get("/create", response_class=HTMLResponse)
+async def create_session_form(request: Request):
+    return templates.TemplateResponse("create_session.html", {"request": request, "form": SessionForm(request)})
 
-@router.get("/sessions/{session_id}/data/", response_model=list[schemas.BCIData])
-def read_data_points(session_id: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    data_points = crud.get_data_points(db, session_id=session_id, skip=skip, limit=limit)
-    return data_points
+@router.post("/create", response_class=HTMLResponse)
+async def create_session(request: Request, db: Session = Depends(get_db)):
+    form = SessionForm(request)
+    await form.load_data()
+    if form.is_valid():
+        session = schemas.BCISessionCreate(
+            session_name=form.session_name,
+            date_recorded=form.date_recorded,
+            subject_id=form.subject_id
+        )
+        crud.create_session(db, session)
+        return RedirectResponse(url="/sessions", status_code=303)
+    return templates.TemplateResponse("create_session.html", {"request": request, "form": form})
