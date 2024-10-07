@@ -4,9 +4,10 @@ from sqlalchemy.orm import Session
 from .. import crud, models, schemas
 from ..database import get_db
 from fastapi.templating import Jinja2Templates
+from datetime import datetime
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="/code/templates")
 
 class SessionForm:
     def __init__(self, request: Request):
@@ -16,7 +17,7 @@ class SessionForm:
         self.date_recorded: Optional[str] = None
         self.subject_id: Optional[str] = None
 
-    async def load_data(self):
+    def load_data(self):
         form = await self.request.form()
         self.session_name = form.get("session_name")
         self.date_recorded = form.get("date_recorded")
@@ -40,11 +41,11 @@ async def create_session(request: Request, db: Session = Depends(get_db)):
     if form.is_valid():
         session = schemas.BCISessionCreate(
             session_name=form.session_name,
-            date_recorded=form.date_recorded,
+            date_recorded=datetime.strptime(form.date_recorded, "%Y-%m-%d"),
             subject_id=form.subject_id
         )
         crud.create_session(db, session)
-        return RedirectResponse(url="/sessions", status_code=303)
+        return RedirectResponse(url="/session-list", status_code=303)
     return templates.TemplateResponse("create_session.html", {"request": request, "form": form})
 
 @router.get("/{session_id}", response_class=HTMLResponse)
