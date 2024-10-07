@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Session Detail{% endblock %}
+{% block title %}Session Detail: {{ session.session_name }}{% endblock %}
 {% block content %}
 <h1 class="mb-4">Session Detail: {{ session.session_name }}</h1>
+<div class="mb-3">
+    <strong>Date Recorded:</strong> {{ session.date_recorded }}
+</div>
+<div class="mb-3">
+    <strong>Subject ID:</strong> {{ session.subject_id }}
+</div>
+
+<h2 class="mt-4 mb-3">Data Points</h2>
 <table class="table">
     <thead>
         <tr>
@@ -14,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for point in page_obj %}
+        {% for point in data_points %}
         <tr>
             <td>{{ point.timestamp }}</td>
             <td>{{ point.channel_1 }}</td>
@@ -22,17 +30,17 @@
             <td>{{ point.channel_3 }}</td>
             <td>{{ point.channel_4 }}</td>
             <td>
-                <a href="{{ url_for('delete_data_point', session_id=session.id, data_point_id=point.id) }}" class="btn btn-sm btn-danger">Delete</a>
+                <a href="{{ url_for('delete_data_point', data_id=point.id) }}" class="btn btn-sm btn-danger">Delete</a>
             </td>
         </tr>
-    {% else %}
+        {% else %}
         <tr>
             <td colspan="6">No data points recorded yet.</td>
         </tr>
-    {% endfor %}
+        {% endfor %}
     </tbody>
 </table>
-<!-- Pagination code here if needed -->
+
 <a href="{{ url_for('add_data_point', session_id=session.id) }}" class="btn btn-primary mt-3">Add Data Point</a>
 <a href="{{ url_for('session_list') }}" class="btn btn-secondary mt-3">Back to Session List</a>
 {% endblock %}

@@ -25,3 +25,23 @@ def delete_data_point(data_id: int, db: Session = Depends(get_db)):
     if not deleted:
         raise HTTPException(status_code=404, detail="Data point not found")
     return {"message": "Data point deleted successfully"}
+
+@router.get("/add/{session_id}", response_class=HTMLResponse)
+async def add_data_point_form(request: Request, session_id: int, db: Session = Depends(get_db)):
+    session = crud.get_session(db, session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return templates.TemplateResponse("add_data_point.html", {"request": request, "session": session})
+
+@router.post("/add/{session_id}", response_class=HTMLResponse)
+async def add_data_point(request: Request, session_id: int, db: Session = Depends(get_db)):
+    form = await request.form()
+    data_point = schemas.BCIDataCreate(
+        timestamp=datetime.now(),
+        channel_1=float(form.get("channel_1")),
+        channel_2=float(form.get("channel_2")),
+        channel_3=float(form.get("channel_3")),
+        channel_4=float(form.get("channel_4"))
+    )
+    crud.create_data_point(db, data_point, session_id)
+    return RedirectResponse(url=f"/sessions/{session_id}", status_code=303)

@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
-{% block title %}Add Data Point{% endblock %}
+{% block title %}Add Data Point to Session: {{ session.session_name }}{% endblock %}
 {% block content %}
 <h1 class="mb-4">Add Data Point to Session: {{ session.session_name }}</h1>
 <form method="post">
-    {% for field in form %}
-        <div class="mb-3">
-            <label for="{{ field.name }}" class="form-label">{{ field.label }}</label>
-            {% if field.errors %}
-                <div class="alert alert-danger">
-                    {% for error in field.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-            <input type="{{ field.type }}" class="form-control" id="{{ field.name }}" name="{{ field.name }}" value="{{ field.value or '' }}">
-            {% if field.help_text %}
-                <div class="form-text">{{ field.help_text }}</div>
-            {% endif %}
-        </div>
-    {% endfor %}
+    <div class="mb-3">
+        <label for="channel_1" class="form-label">Channel 1</label>
+        <input type="number" step="0.01" class="form-control" id="channel_1" name="channel_1" required>
+    </div>
+    <div class="mb-3">
+        <label for="channel_2" class="form-label">Channel 2</label>
+        <input type="number" step="0.01" class="form-control" id="channel_2" name="channel_2" required>
+    </div>
+    <div class="mb-3">
+        <label for="channel_3" class="form-label">Channel 3</label>
+        <input type="number" step="0.01" class="form-control" id="channel_3" name="channel_3" required>
+    </div>
+    <div class="mb-3">
+        <label for="channel_4" class="form-label">Channel 4</label>
+        <input type="number" step="0.01" class="form-control" id="channel_4" name="channel_4" required>
+    </div>
     <button type="submit" class="btn btn-primary">Add Data Point</button>
 </form>
 <a href="{{ url_for('session_detail', session_id=session.id) }}" class="btn btn-secondary mt-3">Back to Session Detail</a>

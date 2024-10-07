@@ -46,3 +46,11 @@ async def create_session(request: Request, db: Session = Depends(get_db)):
         crud.create_session(db, session)
         return RedirectResponse(url="/sessions", status_code=303)
     return templates.TemplateResponse("create_session.html", {"request": request, "form": form})
+
+@router.get("/{session_id}", response_class=HTMLResponse)
+async def session_detail(request: Request, session_id: int, db: Session = Depends(get_db)):
+    session = crud.get_session(db, session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    data_points = crud.get_data_points(db, session_id)
+    return templates.TemplateResponse("session_detail.html", {"request": request, "session": session, "data_points": data_points})
