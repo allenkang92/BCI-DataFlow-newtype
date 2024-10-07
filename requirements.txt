@@ -49,10 +49,12 @@ prometheus-client==0.11.0
 
 # 코드 품질 및 포맷팅
 pylint==2.10.2
-black==21.9b0
+black==21.7b0
 isort==5.9.3
 mypy==0.910
 
 # 컨테이너화 및 오케스트레이션
 docker==5.0.2
 kubernetes==18.20.0
+
+# pathspec 버전 제거 (dvc와의 충돌 해결을 위해)
