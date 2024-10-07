@@ -1,6 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float
 from sqlalchemy.orm import relationship
 from .database import Base
+from sqlalchemy import Boolean
 
 class BCISession(Base):
     __tablename__ = "bci_sessions"
