@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
-    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
+    DATABASE_URL: Optional[PostgresDsn] = None
 
     JWT_SECRET: str
     ALGORITHM: str = "HS256"
@@ -21,8 +21,8 @@ class Settings(BaseSettings):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        if not self.SQLALCHEMY_DATABASE_URI:
-            self.SQLALCHEMY_DATABASE_URI = PostgresDsn.build(
+        if not self.DATABASE_URL:
+            self.DATABASE_URL = PostgresDsn.build(
                 scheme="postgresql",
                 user=self.POSTGRES_USER,
                 password=self.POSTGRES_PASSWORD,
