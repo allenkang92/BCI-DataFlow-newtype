@@ -1,7 +1,6 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float, Boolean
 from sqlalchemy.orm import relationship
 from .database import Base
-from sqlalchemy import Boolean
 
 class BCISession(Base):
     __tablename__ = "bci_sessions"
@@ -25,7 +24,6 @@ class BCIData(Base):
     channel_4 = Column(Float)
 
     session = relationship("BCISession", back_populates="data_points")
-
 
 class User(Base):
     __tablename__ = "users"

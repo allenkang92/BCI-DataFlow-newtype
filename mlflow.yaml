@@ -1,0 +1,7 @@
+python_env: python_env.yaml
+entry_points:
+  main:
+    parameters:
+      data_path: path
+      model_path: path
+    command: "python scripts/train.py {data_path} {model_path}"
