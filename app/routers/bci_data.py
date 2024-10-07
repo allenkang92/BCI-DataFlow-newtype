@@ -1,10 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request, Form
 from sqlalchemy.orm import Session
 from .. import crud, schemas
 from ..database import get_db
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
+from datetime import datetime
 
 router = APIRouter()
+templates = Jinja2Templates(directory="/code/templates")
 
 @router.get("/data/{data_id}", response_model=schemas.BCIData)
 def read_data_point(data_id: int, db: Session = Depends(get_db)):
@@ -35,17 +38,24 @@ async def add_data_point_form(request: Request, session_id: int, db: Session = D
     return templates.TemplateResponse("add_data_point.html", {"request": request, "session": session})
 
 @router.post("/add/{session_id}", response_class=HTMLResponse)
-async def add_data_point(request: Request, session_id: int, db: Session = Depends(get_db)):
-    form = await request.form()
+async def add_data_point(
+    request: Request, 
+    session_id: int, 
+    channel_1: float = Form(...),
+    channel_2: float = Form(...),
+    channel_3: float = Form(...),
+    channel_4: float = Form(...),
+    db: Session = Depends(get_db)
+):
     data_point = schemas.BCIDataCreate(
         timestamp=datetime.now(),
-        channel_1=float(form.get("channel_1")),
-        channel_2=float(form.get("channel_2")),
-        channel_3=float(form.get("channel_3")),
-        channel_4=float(form.get("channel_4"))
+        channel_1=channel_1,
+        channel_2=channel_2,
+        channel_3=channel_3,
+        channel_4=channel_4
     )
     crud.create_data_point(db, data_point, session_id)
-    return RedirectResponse(url=f"/sessions/{session_id}", status_code=303)
+    return RedirectResponse(url=f"/session-detail/{session_id}", status_code=303)
 
 @router.post("/{data_id}/delete", response_class=HTMLResponse)
 async def delete_data_point(request: Request, data_id: int, db: Session = Depends(get_db)):
