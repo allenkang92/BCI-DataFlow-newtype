@@ -54,3 +54,10 @@ async def session_detail(request: Request, session_id: int, db: Session = Depend
         raise HTTPException(status_code=404, detail="Session not found")
     data_points = crud.get_data_points(db, session_id)
     return templates.TemplateResponse("session_detail.html", {"request": request, "session": session, "data_points": data_points})
+
+@router.post("/{session_id}/delete", response_class=HTMLResponse)
+async def delete_session(request: Request, session_id: int, db: Session = Depends(get_db)):
+    deleted = crud.delete_session(db, session_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return RedirectResponse(url="/sessions", status_code=303)

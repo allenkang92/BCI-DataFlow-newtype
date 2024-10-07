@@ -45,3 +45,10 @@ async def add_data_point(request: Request, session_id: int, db: Session = Depend
     )
     crud.create_data_point(db, data_point, session_id)
     return RedirectResponse(url=f"/sessions/{session_id}", status_code=303)
+
+@router.post("/{data_id}/delete", response_class=HTMLResponse)
+async def delete_data_point(request: Request, data_id: int, db: Session = Depends(get_db)):
+    deleted = crud.delete_data_point(db, data_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Data point not found")
+    return RedirectResponse(url=request.headers.get("referer"), status_code=303)
