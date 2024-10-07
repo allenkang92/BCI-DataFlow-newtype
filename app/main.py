@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
 from app import crud, models, schemas
 from app.database import engine
 from app.config import settings
@@ -13,8 +14,8 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
-templates = Jinja2Templates(directory="templates")
-app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="/code/templates")
+app.mount("/static", StaticFiles(directory="/code/static"), name="static")
 
 app.include_router(bci_sessions.router, prefix=settings.API_V1_STR, tags=["sessions"])
 app.include_router(bci_data.router, prefix=settings.API_V1_STR, tags=["data"])

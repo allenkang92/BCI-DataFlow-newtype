@@ -10,6 +10,9 @@ services:
       - POSTGRES_SERVER=db
     depends_on:
       - db
+    volumes:
+      - ./static:/code/static
+      - ./templates:/code/templates
   db:
     image: postgres:13
     volumes:
