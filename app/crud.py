@@ -1,5 +1,9 @@
 from sqlalchemy.orm import Session
+from fastapi import HTTPException
+import logging
 from . import models, schemas
+
+logger = logging.getLogger(__name__)
 
 def get_session(db: Session, session_id: int):
     return db.query(models.BCISession).filter(models.BCISession.id == session_id).first()
@@ -36,3 +40,13 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def delete_session(db: Session, session_id: int):
+    session = db.query(models.BCISession).filter(models.BCISession.id == session_id).first()
+    if not session:
+        logger.error(f"Session with id {session_id} not found")
+        raise HTTPException(status_code=404, detail="Session not found")
+    db.delete(session)
+    db.commit()
+    logger.info(f"Session with id {session_id} deleted successfully")
+    return True
