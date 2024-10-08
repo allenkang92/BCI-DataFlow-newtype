@@ -1,13 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
 from .config import settings
 
-# SQLite 데이터베이스 URL 설정
-SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL  # "sqlite:///Users/c-26/BCI-DataFlow-mlops/database.db" 형식으로 설정
+# MySQL 데이터베이스 URL 설정
+SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{settings.MYSQL_USER}:{settings.MYSQL_PASSWORD}@{settings.MYSQL_SERVER}/{settings.MYSQL_DB}"
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})  # SQLite는 스레드에서 데이터베이스 연결을 공유하지 않도록 설정
+# MySQL 데이터베이스 연결 설정
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "BCI-DataFlow"
     API_V1_STR: str = "/api/v1"
 
-    # MySQL 설정 추가
+    # MySQL 설정
     MYSQL_SERVER: str
     MYSQL_USER: str
     MYSQL_PASSWORD: str
@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         if not self.DATABASE_URL:
+            # MySQL URL 생성
             self.DATABASE_URL = MySQLDsn.build(
                 scheme="mysql",
                 user=self.MYSQL_USER,
