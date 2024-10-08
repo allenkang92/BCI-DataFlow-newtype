@@ -96,7 +96,7 @@ docker-compose up --build
 ---
 
 ## 사용한 예시 데이터셋 설명: Auditory-Visual Shift Study
-
+- https://openneuro.org/datasets/ds002893/versions/2.0.0
 ### 1. 데이터셋 개요
 Auditory-Visual Shift Study는 청각 및 시각 자극에 대한 EEG(뇌전도) 데이터를 기록한 데이터셋. 연구 참가자들이 청각 또는 시각 자극에 집중하는 동안 수집된 EEG 데이터를 포함하고 있으며, 각 자극 및 반응 이벤트가 기록되어 있습니다. 여러 참가자의 여러 실행(run)으로 구성되어 있으며, 실험 중 발생한 자극과 반응 정보를 상세히 제공합니다.
 
