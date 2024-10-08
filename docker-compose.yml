@@ -1,3 +1,5 @@
+version: '3.8'  # Docker Compose 파일 버전 설정
+
 services:
   web:
     build: .
@@ -24,7 +26,7 @@ services:
       - .env
 
   mlflow:
-    image: databricks/mlflow:1.30.0  # 특정 버전 태그 사용
+    image: mlflow/mlflow:2.2.2  # 최신 MLflow 버전으로 변경
     environment:
       - MLFLOW_TRACKING_URI=http://mlflow:5000
     ports:

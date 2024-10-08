@@ -177,3 +177,5 @@ Auditory-Visual Shift Study는 청각 및 시각 자극에 대한 EEG(뇌전도)
 ### 6. 전처리된 데이터 형식
 - **피처 데이터**: 전처리된 EEG 데이터는 각 채널의 평균 전력 밀도 정보를 포함하며, CSV 형식으로 저장됩니다.
   - 파일 예시: `preprocessed_sub-XXX_run-XX_features.csv`.
+
+## 여기에서는 전처리된 데이터셋을 data/processed에 넣어두었습니다.
