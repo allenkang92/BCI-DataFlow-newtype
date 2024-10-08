@@ -8,11 +8,14 @@ services:
       - .env
     environment:
       - POSTGRES_SERVER=db
+      - MLFLOW_TRACKING_URI=http://mlflow:5000  # MLflow 트래킹 서버 URI 설정
     depends_on:
       - db
+      - mlflow
     volumes:
       - ./static:/code/static
       - ./templates:/code/templates
+      - ./mlruns:/mlflow/mlruns  # MLflow 로그 저장 위치 추가
   db:
     image: postgres:13
     volumes:
@@ -20,5 +23,15 @@ services:
     env_file:
       - .env
 
+  mlflow:
+    image: mlflow/mlflow:latest
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000  # MLflow 환경 변수
+    ports:
+      - "5000:5000"  # MLflow 서버 포트
+    volumes:
+      - ./mlruns:/mlflow/mlruns  # MLflow 실험 로그를 저장할 디렉토리 마운트
+
 volumes:
   postgres_data:
+  mlruns:  # MLflow의 실험 데이터가 저장될 볼륨
