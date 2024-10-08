@@ -7,10 +7,6 @@ services:
       - .env
     environment:
       - DATABASE_URL=mysql+pymysql://bci_user:user_password@db/bci_dataflow  # MySQL 연결 설정
-      - MYSQL_ROOT_PASSWORD=my_root_password
-      - MYSQL_DATABASE=bci_dataflow
-      - MYSQL_USER=bci_user
-      - MYSQL_PASSWORD=user_password
     depends_on:
       - db
       - mlflow

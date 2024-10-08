@@ -2,10 +2,9 @@ from pydantic import BaseSettings, MySQLDsn
 from typing import Optional
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "BCI-DataFlow"
+    PROJECT_NAME: str = "BCI-Data-Flow"
     API_V1_STR: str = "/api/v1"
 
-    # MySQL 설정
     MYSQL_SERVER: str
     MYSQL_USER: str
     MYSQL_PASSWORD: str
@@ -23,9 +22,8 @@ class Settings(BaseSettings):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         if not self.DATABASE_URL:
-            # MySQL URL 생성
             self.DATABASE_URL = MySQLDsn.build(
-                scheme="mysql",
+                scheme="mysql+pymysql",
                 user=self.MYSQL_USER,
                 password=self.MYSQL_PASSWORD,
                 host=self.MYSQL_SERVER,
