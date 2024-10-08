@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from datetime import datetime
 
 router = APIRouter()
-templates = Jinja2Templates(directory="/code/templates")
+templates = Jinja2Templates(directory="templates")
 
 @router.get("/data/{data_id}", response_model=schemas.BCIData)
 def read_data_point(data_id: int, db: Session = Depends(get_db)):

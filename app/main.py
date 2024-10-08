@@ -6,7 +6,9 @@ from app import crud, models, schemas
 from app.database import engine, get_db
 from app.config import settings
 from app.routers import bci_sessions, bci_data
+
 from sqlalchemy.orm import Session
+import os
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -15,9 +17,12 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
-templates = Jinja2Templates(directory="/code/templates")
-app.mount("/static", StaticFiles(directory="/code/static"), name="static")
+# 템플릿 및 정적 파일 경로 설정
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 
+# 라우터 설정
 app.include_router(bci_sessions.router, prefix=settings.API_V1_STR, tags=["sessions"])
 app.include_router(bci_data.router, prefix=settings.API_V1_STR, tags=["data"])
 
