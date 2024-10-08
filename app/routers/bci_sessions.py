@@ -5,6 +5,7 @@ from .. import crud, models, schemas
 from ..database import get_db
 from fastapi.templating import Jinja2Templates
 from datetime import datetime
+from typing import List, Optional
 
 router = APIRouter()
 templates = Jinja2Templates(directory="/code/templates")
@@ -17,7 +18,7 @@ class SessionForm:
         self.date_recorded: Optional[str] = None
         self.subject_id: Optional[str] = None
 
-    def load_data(self):
+    async def load_data(self):
         form = await self.request.form()
         self.session_name = form.get("session_name")
         self.date_recorded = form.get("date_recorded")
@@ -37,7 +38,7 @@ async def create_session_form(request: Request):
 @router.post("/create", response_class=HTMLResponse)
 async def create_session(request: Request, db: Session = Depends(get_db)):
     form = SessionForm(request)
-    await form.load_data()
+    await form.load_data()  # 비동기 함수에서 await 사용
     if form.is_valid():
         session = schemas.BCISessionCreate(
             session_name=form.session_name,
