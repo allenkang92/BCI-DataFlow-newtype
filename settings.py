@@ -1,15 +1,14 @@
-from pydantic import BaseSettings, MySQLDsn
-from typing import Optional
+from pydantic import BaseSettings
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "BCI-Data-Flow"
+    PROJECT_NAME: str = "BCI-DataFlow"
     API_V1_STR: str = "/api/v1"
 
-    MYSQL_SERVER: str
-    MYSQL_USER: str
-    MYSQL_PASSWORD: str
-    MYSQL_DB: str
-    DATABASE_URL: Optional[MySQLDsn] = None
+    MYSQL_SERVER: str  # MySQL 서버 주소
+    MYSQL_USER: str    # MySQL 사용자
+    MYSQL_PASSWORD: str  # MySQL 비밀번호
+    MYSQL_DB: str      # 사용할 데이터베이스 이름
+    DATABASE_URL: str  # 문자열로 된 MySQL 데이터베이스 URL
 
     JWT_SECRET: str
     ALGORITHM: str = "HS256"
@@ -22,12 +21,6 @@ class Settings(BaseSettings):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         if not self.DATABASE_URL:
-            self.DATABASE_URL = MySQLDsn.build(
-                scheme="mysql+pymysql",
-                user=self.MYSQL_USER,
-                password=self.MYSQL_PASSWORD,
-                host=self.MYSQL_SERVER,
-                path=f"/{self.MYSQL_DB}",
-            )
+            self.DATABASE_URL = f"mysql+pymysql://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}@{self.MYSQL_SERVER}/{self.MYSQL_DB}"
 
 settings = Settings()
