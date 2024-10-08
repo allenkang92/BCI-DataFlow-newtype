@@ -1,15 +1,11 @@
-from pydantic import BaseSettings, PostgresDsn
+from pydantic import BaseSettings, AnyUrl
 from typing import Optional
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "BCI-DataFlow"
+    PROJECT_NAME: str = "BCI-Data-Flow"
     API_V1_STR: str = "/api/v1"
-    
-    POSTGRES_SERVER: str
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
-    DATABASE_URL: Optional[PostgresDsn] = None
+
+    DATABASE_URL: AnyUrl = "sqlite:///./mlruns/test.db"  # SQLite 기본값으로 설정
 
     JWT_SECRET: str
     ALGORITHM: str = "HS256"
@@ -18,16 +14,5 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         case_sensitive = True
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        if not self.DATABASE_URL:
-            self.DATABASE_URL = PostgresDsn.build(
-                scheme="postgresql",
-                user=self.POSTGRES_USER,
-                password=self.POSTGRES_PASSWORD,
-                host=self.POSTGRES_SERVER,
-                path=f"/{self.POSTGRES_DB}",
-            )
 
 settings = Settings()

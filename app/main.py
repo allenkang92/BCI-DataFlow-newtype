@@ -6,9 +6,13 @@ from app import crud, models, schemas
 from app.database import engine, get_db
 from app.config import settings
 from app.routers import bci_sessions, bci_data
-
 from sqlalchemy.orm import Session
 import os
+import logging
+
+# 로그 설정
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 models.Base.metadata.create_all(bind=engine)
 
