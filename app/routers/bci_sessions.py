@@ -6,6 +6,7 @@ from ..database import get_db
 from fastapi.templating import Jinja2Templates
 from datetime import datetime
 from typing import List, Optional
+from app import crud
 
 router = APIRouter()
 templates = Jinja2Templates(directory="/code/templates")

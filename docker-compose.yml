@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   web:
     build: .
@@ -8,7 +7,7 @@ services:
       - .env
     environment:
       - POSTGRES_SERVER=db
-      - MLFLOW_TRACKING_URI=http://mlflow:5000  # MLflow 트래킹 서버 URI 설정
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
     depends_on:
       - db
       - mlflow
@@ -16,6 +15,7 @@ services:
       - ./static:/code/static
       - ./templates:/code/templates
       - ./mlruns:/mlflow/mlruns  # MLflow 로그 저장 위치 추가
+
   db:
     image: postgres:13
     volumes:
@@ -24,9 +24,9 @@ services:
       - .env
 
   mlflow:
-    image: mlflow/mlflow:latest
+    image: databricks/mlflow:1.30.0  # 특정 버전 태그 사용
     environment:
-      - MLFLOW_TRACKING_URI=http://mlflow:5000  # MLflow 환경 변수
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
     ports:
       - "5000:5000"  # MLflow 서버 포트
     volumes:
@@ -34,4 +34,4 @@ services:
 
 volumes:
   postgres_data:
-  mlruns:  # MLflow의 실험 데이터가 저장될 볼륨
+  mlruns:

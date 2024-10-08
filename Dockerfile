@@ -16,7 +16,7 @@ COPY ./app /code/app
 COPY ./.env /code/.env
 COPY ./static /code/static
 
-# MLflow Tracking URI 설정
+# MLflow 트래킹 URI 설정
 ENV MLFLOW_TRACKING_URI=http://mlflow:5000
 
 # FastAPI 서버 실행
