@@ -4,8 +4,14 @@ FROM python:3.9
 # 작업 디렉토리 설정
 WORKDIR /code
 
-# requirements.txt 복사 및 의존성 설치
+# requirements.txt 복사 및 존재 여부 확인
 COPY ./requirements.txt /code/requirements.txt
+RUN ls -al /code && cat /code/requirements.txt  # 파일 확인을 위한 디버깅 명령어 추가
+
+# pip 설치 전에 pip 최신 버전으로 업데이트 (권장)
+RUN pip install --upgrade pip
+
+# requirements.txt에 명시된 패키지 설치
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 # MLflow 설치 추가
