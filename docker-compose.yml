@@ -5,27 +5,11 @@ services:
       - "8000:8000"
     env_file:
       - .env
-    environment:
-      - DATABASE_URL=mysql+pymysql://bci_user:user_password@db/bci_dataflow  # MySQL 연결 설정
-    depends_on:
-      - db
-      - mlflow
     volumes:
       - ./static:/code/static
       - ./templates:/code/templates
       - ./mlruns:/mlflow/mlruns
-      - ./mysql_data:/var/lib/mysql  # MySQL 데이터 저장 위치 추가
-
-  db:
-    image: mysql:5.7
-    platform: linux/amd64  # AMD64 아키텍처 지정
-    volumes:
-      - ./mysql_data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: my_root_password
-      MYSQL_DATABASE: bci_dataflow
-      MYSQL_USER: bci_user
-      MYSQL_PASSWORD: user_password
+      - ./sqlite_data:/code/sqlite_data  # SQLite 데이터 저장 위치 추가
 
   mlflow:
     image: ghcr.io/mlflow/mlflow:v2.0.1
@@ -37,4 +21,4 @@ services:
       - ./mlruns:/mlflow/mlruns
 
 volumes:
-  mysql_data:
+  sqlite_data:

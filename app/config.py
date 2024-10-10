@@ -1,15 +1,12 @@
+# app/config.py 수정
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "BCI-DataFlow"
+    PROJECT_NAME: str = "BCI-Data-Flow"
     API_V1_STR: str = "/api/v1"
 
-    # MySQL 설정
-    MYSQL_SERVER: str
-    MYSQL_USER: str
-    MYSQL_PASSWORD: str
-    MYSQL_DB: str
-    DATABASE_URL: str  # 직접 URL을 문자열로 처리
+    # 기존 MySQL 설정 제거하고 SQLite 사용
+    DATABASE_URL: str = "sqlite:///./sql_app.db"  # SQLite 데이터베이스 URL
 
     JWT_SECRET: str
     ALGORITHM: str = "HS256"

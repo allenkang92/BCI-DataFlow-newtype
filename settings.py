@@ -4,12 +4,8 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "BCI-DataFlow"
     API_V1_STR: str = "/api/v1"
 
-    # MySQL 설정을 위한 변수
-    MYSQL_SERVER: str
-    MYSQL_USER: str
-    MYSQL_PASSWORD: str
-    MYSQL_DB: str
-    DATABASE_URL: str  # 문자열로 URL 처리
+    # SQLite 설정을 위한 변수
+    DATABASE_URL: str = "sqlite:///./sqlite_data/sql_app.db"  # SQLite 데이터베이스 파일 경로
 
     JWT_SECRET: str
     ALGORITHM: str = "HS256"
