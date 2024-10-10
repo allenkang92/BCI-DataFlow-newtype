@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   web:
@@ -13,6 +13,7 @@ services:
       - ./static:/code/static
       - ./templates:/code/templates
       - ./mlruns:/mlflow/mlruns
+      - ./sqlite_data:/code/sqlite_data  # SQLite 파일이 저장될 디렉터리
 
   mlflow:
     image: ghcr.io/mlflow/mlflow:v2.0.1
@@ -24,4 +25,4 @@ services:
       - ./mlruns:/mlflow/mlruns
 
 volumes:
-  mlruns:
+  sqlite_data:

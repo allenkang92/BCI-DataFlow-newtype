@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from .config import settings
 
 # SQLite 데이터베이스 URL 설정
-SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL  # .env에서 불러온 SQLite URL
+SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
 
 # SQLite용 엔진 생성
 engine = create_engine(
