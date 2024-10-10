@@ -1,8 +1,9 @@
-import joblib
+import mlflow
+import mlflow.sklearn
 import pandas as pd
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+import joblib
 import json
-import mlflow
 
 def evaluate_model(model_path, test_data_path):
     # Load model
@@ -35,4 +36,4 @@ def evaluate_model(model_path, test_data_path):
     print("Evaluation complete. Metrics saved to metrics.json")
 
 if __name__ == "__main__":
-    evaluate_model('models/model.pkl', 'data/test/test_data.csv')
+    evaluate_model('models/model.pkl', 'data/processed/test_data.csv')
