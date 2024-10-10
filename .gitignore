@@ -1,2 +1,8 @@
 # macOS-specific files to ignore
 .DS_Store
+
+# Ignore DVC tracked data, model, and metrics files
+data/processed/eeg_train_data.csv
+data/processed/eeg_test_data.csv
+models/eeg_model.pkl
+metrics/eeg_metrics.json
