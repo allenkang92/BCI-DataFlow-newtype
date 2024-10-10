@@ -14,6 +14,8 @@ services:
       - ./templates:/code/templates
       - ./mlruns:/mlflow/mlruns
       - ./sqlite_data:/code/sqlite_data  # SQLite 파일이 저장될 디렉터리
+      - ./data/processed:/code/data/processed  # 로컬의 데이터를 컨테이너로 연결
+      - ./scripts:/code/scripts  # 스크립트를 컨테이너로 연결
     deploy:
       resources:
         limits:
