@@ -2,25 +2,23 @@ stages:
   prepare:
     cmd: python scripts/prepare.py
     deps:
-      - data/raw/eeg_raw_data.csv  # raw 데이터 경로 업데이트
+      - data/raw/eeg_raw_data.csv
     outs:
-      - data/processed/eeg_train_data.csv  # 처리된 훈련 데이터
-      - data/processed/eeg_test_data.csv   # 처리된 테스트 데이터
+      - data/processed/eeg_train_data.csv
+      - data/processed/eeg_test_data.csv
 
   train:
     cmd: python scripts/train.py
     deps:
-      - data/processed/eeg_train_data.csv  # 처리된 훈련 데이터
-    params:
-      - hyperparameters.yaml  # 하이퍼파라미터 설정 파일
+      - data/processed/eeg_train_data.csv
+      - hyperparameters.yaml
     outs:
-      - models/eeg_model.pkl  # 훈련된 모델 출력 파일
+      - models/model.pkl
 
   evaluate:
     cmd: python scripts/evaluate.py
     deps:
-      - models/eeg_model.pkl  # 훈련된 모델 경로
-      - data/processed/eeg_test_data.csv  # 테스트 데이터 경로
+      - models/model.pkl
+      - data/processed/eeg_test_data.csv
     metrics:
-      - metrics/eeg_metrics.json:  # 평가 결과 메트릭 파일 경로
-          cache: false  # 캐시 사용 여부 설정
+      - metrics/eeg_metrics.json
