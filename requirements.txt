@@ -2,10 +2,8 @@
 fastapi==0.95.0
 uvicorn==0.20.0
 
-# 데이터베이스
+# 데이터베이스 (SQLite로 변경 시)
 sqlalchemy==1.4.47
-pymysql==1.0.2  # MySQL 연결을 위한 PyMySQL 추가
-alembic==1.10.2
 
 # 데이터 처리 및 분석
 pandas==1.5.3
@@ -53,11 +51,5 @@ black==23.3.0
 isort==5.12.0
 mypy==0.991  # 지원되는 버전으로 변경
 
-# 컨테이너화 및 오케스트레이션
-docker==5.0.2
-kubernetes==18.20.0
-
 # 템플릿 엔진
 Jinja2==3.1.2
-
-pydantic==1.10.4
