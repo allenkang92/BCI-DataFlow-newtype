@@ -2,11 +2,12 @@ import mlflow
 import mlflow.sklearn
 import pandas as pd
 import re
+import dvc.api
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 
-# 데이터 경로 설정 (컨테이너 내부 경로)
-data_path = "/code/data/processed/eeg_data.csv"
+# DVC를 통해 데이터 파일 경로 및 버전 확인
+data_path = dvc.api.get_url(path='data/processed/eeg_data.csv')
 
 # 데이터 로드
 data = pd.read_csv(data_path)
@@ -17,17 +18,14 @@ print("Loaded data columns:", data.columns)
 # 타겟 변수 'preprocessed'의 고유 값 출력
 print("Unique values in 'preprocessed':", data["preprocessed"].unique())
 
-# 함수 정의: 문자열에서 숫자 추출
+# 'preprocessed' 컬럼에서 숫자 추출하여 새로운 컬럼으로 저장
 def extract_numbers(s):
     return [float(num) for num in re.findall(r"[-+]?\d*\.\d+e[-+]?\d+", s)]
 
-# 'preprocessed' 컬럼에서 숫자 추출하여 새로운 컬럼으로 저장
 data["preprocessed_values"] = data["preprocessed"].apply(extract_numbers)
 
 # 리스트 형태의 데이터를 각 열로 분할
 preprocessed_df = pd.DataFrame(data["preprocessed_values"].tolist())
-
-# 필요한 경우, 열 이름을 지정 (예: 'feature_0', 'feature_1', ...)
 preprocessed_df.columns = [f'feature_{i}' for i in range(preprocessed_df.shape[1])]
 
 # 데이터 병합
@@ -36,17 +34,9 @@ data = pd.concat([data.drop(columns=["preprocessed", "preprocessed_values"]), pr
 # NaN이 있는 행 제거
 data.dropna(inplace=True)
 
-# 타겟 변수 설정 (예시로 'subject_id'를 사용)
-y = data["subject_id"]  # 예측하려는 타겟 변수로 변경
-
-# 특성 변수 설정
+# 타겟 변수와 특성 변수 설정
+y = data["subject_id"]
 X = data.drop(columns=["subject_id", "run_id", "channels", "coordsystem", "electrodes", "events"], errors='ignore')
-
-# X와 y가 비어있는지 체크
-if X.empty or y.empty:
-    print("X shape:", X.shape)
-    print("y shape:", y.shape)
-    raise ValueError("Input data (X) or target variable (y) is empty after cleaning.")
 
 # 학습 데이터와 테스트 데이터 분리
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

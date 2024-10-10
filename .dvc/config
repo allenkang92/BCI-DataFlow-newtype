@@ -1,0 +1,4 @@
+[core]
+    remote = localstorage
+['remote "localstorage"']
+    url = /Users/c-26/BCI-DataFlow-mlops/BCI-DataFlow-mlops/storage
