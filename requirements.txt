@@ -3,8 +3,8 @@ fastapi==0.95.0        # FastAPI 웹 프레임워크
 uvicorn==0.22.0        # FastAPI 서버 실행을 위한 ASGI 서버
 
 # 데이터베이스 및 ORM 관련 패키지
-SQLAlchemy==2.0.35     # SQLAlchemy ORM (데이터베이스 관리)
-alembic==1.4.1         # SQLAlchemy와 함께 사용하는 데이터베이스 마이그레이션 도구
+SQLAlchemy==1.4.41    # SQLAlchemy ORM (데이터베이스 관리)
+alembic==1.4.1      # SQLAlchemy와 함께 사용하는 데이터베이스 마이그레이션 도구
 pydantic==1.10.0       # 데이터 검증 및 설정 관리 (FastAPI와 SQLAlchemy와 함께 사용)
 
 # 보안 및 인증 관련 패키지

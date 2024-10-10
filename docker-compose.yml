@@ -14,15 +14,41 @@ services:
       - ./templates:/code/templates
       - ./mlruns:/mlflow/mlruns
       - ./sqlite_data:/code/sqlite_data  # SQLite 파일이 저장될 디렉터리
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.50'
 
   mlflow:
     image: ghcr.io/mlflow/mlflow:v2.0.1
     environment:
       - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MLFLOW_TRACKING_USERNAME=admin
+      - MLFLOW_TRACKING_PASSWORD=admin  # 필요시 설정
+      - MLFLOW_SERVER_DEFAULT_ARTIFACT_ROOT=./mlruns
+      - MLFLOW_SERVER_HOST=0.0.0.0
     ports:
       - "5000:5000"
     volumes:
       - ./mlruns:/mlflow/mlruns
+    platform: linux/amd64  # 플랫폼을 명시적으로 지정
+    command: mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 0.0.0.0
+    deploy:
+      resources:
+        limits:
+          memory: 1G  # 1GB 메모리 할당
+          cpus: '1.00'
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - web
+      - mlflow
 
 volumes:
   sqlite_data:
