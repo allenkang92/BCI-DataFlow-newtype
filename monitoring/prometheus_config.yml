@@ -1,7 +1,30 @@
 global:
   scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
 
 scrape_configs:
-  - job_name: 'bci_dataflow'
+  - job_name: 'neurosignal_processor'
+    metrics_path: '/metrics'
     static_configs:
-      - targets: ['localhost:8000']
+      - targets: ['web:8000']
+    scrape_interval: 5s
+    metrics_labels:
+      service: 'bci_dataflow'
+
+  - job_name: 'mlflow'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['mlflow:5000']
+    scrape_interval: 30s
+    metrics_labels:
+      service: 'model_tracking'
+
+rule_files:
+  - 'alert.rules'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # alertmanager:9093

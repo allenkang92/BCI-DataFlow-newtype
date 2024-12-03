@@ -1,11 +1,11 @@
-# BCI-DataFlow-MLOps
+# neurosignal-processor
 
-BCI-DataFlow-MLOps는 뇌-컴퓨터 인터페이스(BCI) 데이터 처리 및 MLOps 통합을 위한 플랫폼입니다. 데이터 전처리, 모델 관리, 데이터 흐름 자동화를 지원하려고 노력합니다... 하하
+neurosignal-processor는 뇌-컴퓨터 인터페이스(BCI) 데이터 처리 및 MLOps 통합을 위한 플랫폼입니다. 데이터 전처리, 모델 관리, 데이터 흐름 자동화를 지원하려고 노력합니다... 하하
 
 ## 프로젝트 구조
 
 ```
-BCI-DataFlow-MLOps/
+neurosignal-processor/
 ├── scripts/
 │   ├── prepare.py
 │   ├── train.py
@@ -109,10 +109,39 @@ dvc repro  # DVC 파이프라인 재실행
 docker-compose exec mlflow mlflow ui
 ```
 
+## 데이터 드리프트 감지 및 모니터링
+
+### 데이터 드리프트 감지
+프로젝트는 실시간 데이터 드리프트 감지 기능을 포함하고 있습니다. 이는 모델의 성능이 시간이 지남에 따라 저하되는 것을 방지하기 위한 중요한 기능입니다.
+
+- **드리프트 감지 로직**:
+  - 평균과 표준편차의 변화를 동시에 모니터링
+  - 평균이 0에 가까운 경우(`zero_threshold = 0.5`)와 그렇지 않은 경우를 구분하여 처리
+  - 표준편차의 변화(`std_threshold = 0.2`)를 통한 분포 변화 감지
+
+### 모니터링 시스템
+Prometheus를 사용하여 모델 성능과 데이터 드리프트를 실시간으로 모니터링합니다:
+
+- **주요 메트릭**:
+  - 모델 예측 수 (`model_predictions_total`)
+  - 예측 지연 시간 (`model_prediction_latency_seconds`)
+  - 모델 정확도 (`model_accuracy`)
+  - 데이터 드리프트 점수 (`data_drift_score`)
+
+```bash
+# Prometheus 메트릭 확인
+curl localhost:9090/metrics
+```
+
+### 테스트
+데이터 드리프트 감지 기능의 신뢰성을 보장하기 위해 다양한 테스트 케이스가 구현되어 있습니다:
+- 드리프트가 없는 경우 (유사한 분포)
+- 드리프트가 있는 경우 (평균 또는 표준편차가 크게 다른 경우)
+- 0에 가까운 평균값을 가진 경우
+
 ## Docker 환경 구성
 - **Docker Compose**를 사용하여 모든 스크립트 및 실행 환경이 컨테이너 내에서 동작하도록 설정되었습니다.
 - **MLflow** 서버, **SQLite** 데이터베이스, 데이터 처리 및 학습 스크립트가 모두 컨테이너 내에서 실행됩니다.
 
 ## DVC 통합
 DVC를 통해 데이터셋과 모델의 버전 관리가 이루어집니다. 전처리 단계 및 학습, 평가 단계를 DVC 스테이지로 관리하며, 데이터 및 모델 변경 사항을 추적할 수 있습니다.
-

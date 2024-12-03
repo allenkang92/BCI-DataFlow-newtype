@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/c-26/neurosignal-processor/neurosignal-processor/mlruns/0/a5e6e4698a8b4e2a80e5bdd0e5d7b66c/artifacts
+end_time: 1733201202584
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a5e6e4698a8b4e2a80e5bdd0e5d7b66c
+run_name: selective-shrimp-909
+run_uuid: a5e6e4698a8b4e2a80e5bdd0e5d7b66c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733201199741
+status: 3
+tags: []
+user_id: c-26

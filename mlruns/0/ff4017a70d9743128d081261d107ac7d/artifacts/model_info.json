@@ -1,0 +1,38 @@
+{
+  "version": "20241203_131935",
+  "hyperparameters": {
+    "max_depth": 5,
+    "n_estimators": 100,
+    "random_state": 42
+  },
+  "metrics": {
+    "data_drift_detected": 0,
+    "drift_subject_id_reference_mean": 1.5,
+    "drift_subject_id_current_mean": 1.5,
+    "drift_subject_id_relative_difference": 0.0,
+    "train_accuracy": 1.0,
+    "test_accuracy": 1.0,
+    "train_precision": 1.0,
+    "test_precision": 1.0,
+    "train_recall": 1.0,
+    "test_recall": 1.0,
+    "train_f1": 1.0,
+    "test_f1": 1.0,
+    "feature_count": 3,
+    "training_samples": 4,
+    "test_samples": 2
+  },
+  "feature_names": [
+    "feature_0",
+    "feature_1",
+    "feature_2"
+  ],
+  "training_date": "2024-12-03T13:19:35.136173",
+  "python_version": "3.12.4",
+  "dependencies": {
+    "sklearn": "1.5.1",
+    "pandas": "2.2.2",
+    "numpy": "2.1.1",
+    "mlflow": "2.18.0"
+  }
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "feature": "feature_0",
+    "importance": 0.48148148148148145
+  },
+  {
+    "feature": "feature_2",
+    "importance": 0.4444444444444444
+  },
+  {
+    "feature": "feature_1",
+    "importance": 0.07407407407407407
+  }
+]

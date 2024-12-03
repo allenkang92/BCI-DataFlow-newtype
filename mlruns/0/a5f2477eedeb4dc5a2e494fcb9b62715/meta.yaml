@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/c-26/neurosignal-processor/neurosignal-processor/mlruns/0/a5f2477eedeb4dc5a2e494fcb9b62715/artifacts
+end_time: 1733201487786
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a5f2477eedeb4dc5a2e494fcb9b62715
+run_name: gifted-yak-488
+run_uuid: a5f2477eedeb4dc5a2e494fcb9b62715
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733201487739
+status: 3
+tags: []
+user_id: c-26

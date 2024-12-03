@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/c-26/neurosignal-processor/neurosignal-processor/mlruns/0/63f4760003224e918f086afa4af671e9/artifacts
+end_time: 1733199998792
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 63f4760003224e918f086afa4af671e9
+run_name: victorious-cow-23
+run_uuid: 63f4760003224e918f086afa4af671e9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733199995555
+status: 3
+tags: []
+user_id: c-26

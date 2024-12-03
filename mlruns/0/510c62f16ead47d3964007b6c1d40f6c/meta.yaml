@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/c-26/neurosignal-processor/neurosignal-processor/mlruns/0/510c62f16ead47d3964007b6c1d40f6c/artifacts
+end_time: 1733200203069
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 510c62f16ead47d3964007b6c1d40f6c
+run_name: capricious-bear-88
+run_uuid: 510c62f16ead47d3964007b6c1d40f6c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733200199705
+status: 3
+tags: []
+user_id: c-26

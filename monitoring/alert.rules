@@ -1,0 +1,29 @@
+groups:
+  - name: neurosignal_processor_alerts
+    rules:
+      - alert: HighDataDriftScore
+        expr: data_drift_score > 0.7
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High data drift detected"
+          description: "Data drift score has exceeded 0.7 for {{ $labels.feature }}"
+
+      - alert: LowModelAccuracy
+        expr: model_accuracy < 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low model accuracy"
+          description: "Model accuracy has dropped below 0.8 for {{ $labels.model_version }}"
+
+      - alert: HighPredictionLatency
+        expr: rate(model_prediction_latency_seconds_sum[5m]) / rate(model_prediction_latency_seconds_count[5m]) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High prediction latency"
+          description: "Average prediction latency is above 0.5 seconds"

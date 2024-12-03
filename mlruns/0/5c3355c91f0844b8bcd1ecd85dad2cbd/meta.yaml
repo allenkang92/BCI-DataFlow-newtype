@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/c-26/neurosignal-processor/neurosignal-processor/mlruns/0/5c3355c91f0844b8bcd1ecd85dad2cbd/artifacts
+end_time: 1733199536290
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5c3355c91f0844b8bcd1ecd85dad2cbd
+run_name: training_run_20241203_131853
+run_uuid: 5c3355c91f0844b8bcd1ecd85dad2cbd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733199533514
+status: 4
+tags: []
+user_id: c-26

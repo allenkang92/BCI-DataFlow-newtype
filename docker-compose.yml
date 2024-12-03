@@ -16,7 +16,7 @@ services:
       - ./sqlite_data:/code/sqlite_data  # SQLite 파일이 저장될 디렉터리
       - ./data/processed:/code/data/processed  # 로컬의 데이터를 컨테이너로 연결
       - ./scripts:/code/scripts  # 스크립트를 컨테이너로 연결
-      - /Users/c-26/BCI-DataFlow-mlops/BCI-DataFlow-mlops/storage:/app/storage  # DVC 로컬 저장소 연결
+      - /Users/c-26/neurosignal-processor/neurosignal-processor/storage:/app/storage  # DVC 로컬 저장소 연결
     deploy:
       resources:
         limits:
@@ -53,5 +53,24 @@ services:
       - web
       - mlflow
 
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus_config.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.50'
+
 volumes:
   sqlite_data:
+  prometheus_data:

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/c-26/neurosignal-processor/neurosignal-processor/mlruns/0/ff4017a70d9743128d081261d107ac7d/artifacts
+end_time: 1733199578312
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ff4017a70d9743128d081261d107ac7d
+run_name: calm-croc-660
+run_uuid: ff4017a70d9743128d081261d107ac7d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733199575586
+status: 3
+tags: []
+user_id: c-26

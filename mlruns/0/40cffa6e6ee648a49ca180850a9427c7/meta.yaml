@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/c-26/neurosignal-processor/neurosignal-processor/mlruns/0/40cffa6e6ee648a49ca180850a9427c7/artifacts
+end_time: 1733201600136
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 40cffa6e6ee648a49ca180850a9427c7
+run_name: receptive-gull-302
+run_uuid: 40cffa6e6ee648a49ca180850a9427c7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733201600073
+status: 3
+tags: []
+user_id: c-26
